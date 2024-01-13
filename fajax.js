@@ -92,3 +92,24 @@ function customise_logo() {
 }
 
 customise_logo();
+
+function add_page_jumper_gallery() {
+    if (!String(window.location).includes("/gallery/")) { return; }
+
+    let e = document.getElementsByClassName("submission-list")[0].children[0].children[1];
+    let parts = String(window.location).split("/");
+    console.log(parts);
+
+    let current_page = (parts.length > 5 && parts[5] != "") ? parseInt(parts[5]) : 1;
+
+    e.innerHTML = `Jump to page: <input id="fajax-gallery-jumper" type="text" class="textbox" value="${current_page}" style="width: 100px;" title="Press enter while focused to navigate"/>`;
+
+    document.getElementById("fajax-gallery-jumper").addEventListener("keydown", function (e) {
+        if (e.keyCode == 13) {
+            (parts.length > 5) ? parts[5] = e.target.value : parts.push(e.target.value);
+            window.location = parts.join("/");
+        }
+    });
+}
+
+add_page_jumper_gallery();
