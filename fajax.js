@@ -94,7 +94,7 @@ function customise_logo() {
 customise_logo();
 
 function add_page_jumper_gallery() {
-    if (!String(window.location).includes("/gallery/")) { return; }
+    if (!String(window.location).includes("/gallery/") && !String(window.location).includes("/scraps/")) { return; }
 
     let e = document.getElementsByClassName("submission-list")[0].children[0].children[1];
     let parts = String(window.location).split("/");
