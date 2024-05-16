@@ -11,6 +11,41 @@
 
 console.log("fAJAX");
 
+function classic_width() {
+    let bodies = document.getElementsByTagName("body");
+
+    for (let body of bodies) {
+        body.style.maxWidth = "none";
+    }
+
+    let htmls = document.getElementsByTagName("html");
+
+    for (let html of htmls) {
+        html.style.maxWidth = "none";
+    }
+
+    document.getElementById("ddmenu").style.maxWidth = "none";
+}
+
+classic_width();
+
+function toggle_sidebar() {
+    let sidebar = document.getElementsByClassName("submission-sidebar")[0];
+    sidebar.style.display = (sidebar.style.display != "none") ? "none" : "block";
+}
+
+function add_sidebar_toggles() {
+    let favnav = document.getElementsByClassName("favorite-nav");
+    if (favnav.length > 0) {
+        favnav = favnav[0];
+        favnav.innerHTML += `<button id="fajax-sidebar-toggle" class="button standard mobile-fix">Sidebar</button>`;
+        let toggle = document.getElementById("fajax-sidebar-toggle");
+        toggle.addEventListener("click", toggle_sidebar);
+    }
+}
+
+add_sidebar_toggles();
+
 function ajaxify_fav_button() {
     let elements = document.getElementsByClassName("fav");
 
