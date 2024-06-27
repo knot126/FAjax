@@ -24,6 +24,18 @@ function classic_width() {
         html.style.maxWidth = "none";
     }
 
+    let site_banners = document.getElementsByTagName("site-banner");
+
+    for (let banner of site_banners) {
+        banner.innerHTML = "<style>site-banner img {object-fit: cover !important;}</style>" + banner.innerHTML;
+    }
+
+    let user_nav_headers = document.getElementsByTagName("userpage-nav-header");
+
+    for (let headers of user_nav_headers) {
+        headers.style.maxWidth = "none";
+    }
+
     document.getElementById("ddmenu").style.maxWidth = "none";
 }
 
