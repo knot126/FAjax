@@ -36,7 +36,12 @@ function classic_width() {
         headers.style.maxWidth = "none";
     }
 
-    document.getElementById("ddmenu").style.maxWidth = "none";
+    try {
+        document.getElementById("ddmenu").style.maxWidth = "none";
+    } catch (e) {}
+    try {
+        document.getElementById("news").style.maxWidth = "none";
+    } catch (e) {}
 }
 
 classic_width();
