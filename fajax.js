@@ -9,6 +9,15 @@
 // @grant        none
 // ==/UserScript==
 
+async function fetch_doc(url) {
+    let otherDoc = document.implementation.createHTMLDocument('');
+    let result = await (await fetch(url)).text();
+    otherDoc.open();
+    otherDoc.write(result);
+    otherDoc.close();
+    return otherDoc;
+}
+
 console.log("fAJAX");
 
 function classic_width() {
@@ -70,7 +79,7 @@ function ajaxify_fav_button() {
         let link = e.children[0];
         let favURL = link.href;
 
-        console.log(favURL);
+        //console.log(favURL);
 
         link.onclick = function () {
             let f = async function () {
@@ -137,6 +146,22 @@ function ajaxify_notifications() {
 
 ajaxify_notifications();
 
+function better_index() {
+    if (window.location.pathname != "/") { return; }
+
+    let f = async function() {
+        let subs = await fetch_doc("/msg/submissions");
+        let e = document.getElementById("frontpage");
+        e.innerHTML = subs.getElementsByClassName("gallery-section")[0].outerHTML + e.innerHTML;
+    }
+
+    document.getElementById("frontpage").innerHTML = "";
+
+    f();
+}
+
+//better_index();
+
 function customise_logo() {
     let e = document.getElementsByClassName("nav-bar-logo")[0];
 
@@ -174,3 +199,25 @@ function add_page_jumper_gallery() {
 }
 
 add_page_jumper_gallery();
+
+function add_user_search() {
+    let e = document.getElementsByTagName("userpage-nav-links");
+
+    if (e.length > 0) {
+        let lower = window.location.pathname.match(/\/[a-z]+\/([a-z0-9]+)/)[1];
+        e[0].children[0].innerHTML += `<li><h3><a href="/search/?q=@lower+${lower}">Search</a></h3></li>`;
+    }
+}
+
+add_user_search();
+
+function hide_admin_poster() {
+    let e = document.getElementById("admin_notice_do_not_adblock2");
+    if (e) {
+        e.remove();
+        e = document.getElementById("header");
+        e.classList.remove("has-adminmessage");
+    }
+}
+
+// hide_admin_poster();
